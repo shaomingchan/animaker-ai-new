@@ -49,39 +49,37 @@ export const POST = Webhook({
     const providerOrderId = data.order?.id || data.id;
     const credits = getCreditsForProduct(productId);
 
-    // Use transaction for atomicity
-    await db.transaction(async (tx) => {
-      const [existingOrder] = await tx.select({ id: orders.id })
-        .from(orders)
-        .where(
-          and(
-            eq(orders.provider, 'creem'),
-            eq(orders.providerOrderId, providerOrderId),
-          )
+    // NOTE: neon-http driver does not support .transaction().
+    // Idempotency check first.
+    const [existingOrder] = await db.select({ id: orders.id })
+      .from(orders)
+      .where(
+        and(
+          eq(orders.provider, 'creem'),
+          eq(orders.providerOrderId, providerOrderId),
         )
-        .limit(1);
+      )
+      .limit(1);
 
-      if (existingOrder) {
-        console.log(`[Creem Webhook] duplicate checkout.completed ignored: order=${providerOrderId}`);
-        return;
-      }
+    if (existingOrder) {
+      console.log(`[Creem Webhook] duplicate checkout.completed ignored: order=${providerOrderId}`);
+      return;
+    }
 
-      // Add credits to user
-      await tx.update(users)
-        .set({ credits: sql`${users.credits} + ${credits}` })
-        .where(sql`${users.id} = ${userId}`);
+    // Sequential operations: add credits first, then record order.
+    await db.update(users)
+      .set({ credits: sql`${users.credits} + ${credits}` })
+      .where(sql`${users.id} = ${userId}`);
 
-      // Record the order
-      await tx.insert(orders).values({
-        userId,
-        provider: 'creem',
-        providerOrderId,
-        credits,
-        amount: data.order?.amount || (credits === 10 ? 999 : 199),
-        currency: (data.order?.currency?.toUpperCase() === 'CNY' ? 'CNY' : 'USD') as 'CNY' | 'USD',
-        status: 'paid',
-        paidAt: new Date(),
-      });
+    await db.insert(orders).values({
+      userId,
+      provider: 'creem',
+      providerOrderId,
+      credits,
+      amount: data.order?.amount || (credits === 10 ? 999 : 199),
+      currency: (data.order?.currency?.toUpperCase() === 'CNY' ? 'CNY' : 'USD') as 'CNY' | 'USD',
+      status: 'paid',
+      paidAt: new Date(),
     });
 
     console.log(`[Creem Webhook] checkout.completed: user=${userId}, email=${data.customer?.email}, +${credits} credits`);

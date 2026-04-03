@@ -100,19 +100,18 @@ export async function POST(
     }
 
     if (result.status === 'FAILED') {
-      await db.transaction(async (tx) => {
-        await tx.update(tasks)
-          .set({
-            status: 'failed',
-            errorMessage: result.errorMessage || 'Generation failed',
-            completedAt: new Date(),
-          })
-          .where(eq(tasks.id, taskId));
+      // NOTE: neon-http driver does not support .transaction(). Sequential ops instead.
+      await db.update(tasks)
+        .set({
+          status: 'failed',
+          errorMessage: result.errorMessage || 'Generation failed',
+          completedAt: new Date(),
+        })
+        .where(eq(tasks.id, taskId));
 
-        await tx.update(users)
-          .set({ credits: sql`${users.credits} + 1` })
-          .where(sql`${users.id} = ${userId}`);
-      });
+      await db.update(users)
+        .set({ credits: sql`${users.credits} + 1` })
+        .where(sql`${users.id} = ${userId}`);
 
       return NextResponse.json({
         id: taskId,

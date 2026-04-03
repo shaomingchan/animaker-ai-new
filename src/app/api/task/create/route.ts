@@ -81,24 +81,29 @@ export async function POST(req: NextRequest) {
       duration,  // Use dynamic duration from frontend
     });
 
-    await db.transaction(async (tx) => {
-      await tx.update(users)
-        .set({ credits: sql`${users.credits} - 1` })
-        .where(sql`${users.id} = ${userId}`);
+    // NOTE: neon-http driver does not support .transaction().
+    // Using sequential operations: deduct credits first, then insert task.
+    const creditDeductResult = await db.update(users)
+      .set({ credits: sql`${users.credits} - 1` })
+      .where(sql`${users.id} = ${userId}`)
+      .returning();
 
-      await tx.insert(tasks).values({
-        id: taskId,
-        userId: userId,
-        status: 'running',
-        imageKey: photoKey,
-        videoKey: videoKey,
-        rhTaskId: rhResult.taskId,
-        rhImageFile: rhImage.fileName,
-        rhVideoFile: rhVideo.fileName,
-        resolution,
-        duration,
-        fps: 30,
-      });
+    if (!creditDeductResult || creditDeductResult.length === 0) {
+      return NextResponse.json({ error: 'Failed to deduct credits' }, { status: 500 });
+    }
+
+    await db.insert(tasks).values({
+      id: taskId,
+      userId: userId,
+      status: 'running',
+      imageKey: photoKey,
+      videoKey: videoKey,
+      rhTaskId: rhResult.taskId,
+      rhImageFile: rhImage.fileName,
+      rhVideoFile: rhVideo.fileName,
+      resolution,
+      duration,
+      fps: 30,
     });
 
     return NextResponse.json({
