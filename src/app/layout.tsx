@@ -1,89 +1,28 @@
+// Binary search: only Inter font + Analytics + HtmlLangSync (no headers() at all)
 import type { Metadata } from "next";
 import { Inter } from "next/font/google";
-import { headers } from "next/headers";
 import { Analytics } from "@vercel/analytics/react";
 import HtmlLangSync from "@/components/HtmlLangSync";
-import { localeCodes } from "@/i18n/translations";
-import type { Locale } from "@/i18n/translations";
 import "./globals.css";
 
 const inter = Inter({ subsets: ["latin"] });
 
 export const metadata: Metadata = {
-  title: "AI Dance Video Generator - Upload Your Own Dance Reference | Animaker.AI",
-  description:
-    "Upload a photo and your own dance video. Our AI transfers the exact movements to create stunning animated videos. No editing skills needed. Try it for $1.99.",
-  keywords: [
-    "AI video generator",
-    "photo to video",
-    "AI dance video",
-    "motion transfer AI",
-    "make photo dance",
-    "AI animation",
-    "animate photo",
-  ],
-  icons: {
-    icon: "/favicon.ico",
-    apple: "/apple-touch-icon.png",
-  },
-  openGraph: {
-    title: "AI Dance Video Generator",
-    description:
-      "Upload a photo and your own dance video. Our AI transfers the exact movements to create stunning animated videos.",
-    url: "https://animaker.dev",
-    siteName: "Animaker.AI",
-    type: "website",
-    images: [
-      {
-        url: "https://pub-6870195e15d044f2944fc59f9ee569df.r2.dev/animaker/og-image.png",
-        width: 1200,
-        height: 630,
-        alt: "Animaker.AI - Make Any Photo Dance with AI",
-      },
-    ],
-  },
-  twitter: {
-    card: "summary_large_image",
-    title: "AI Dance Video Generator",
-    description:
-      "Upload a photo and your own dance video. Our AI transfers the exact movements to create stunning animated videos.",
-    images: [
-      "https://pub-6870195e15d044f2944fc59f9ee569df.r2.dev/animaker/og-image.png",
-    ],
-  },
-  robots: {
-    index: true,
-    follow: true,
-  },
+  title: "Animaker.AI",
 };
 
-async function getLocaleFromHeader(): Promise<Locale> {
-  try {
-    const headerStore = await headers()
-    const locale = headerStore.get("x-locale")
-    if (locale && localeCodes.includes(locale as Locale)) {
-      return locale as Locale
-    }
-  } catch {
-    // headers() may also throw in some edge runtimes; fall back to "en"
-  }
-  return "en"
-}
-
-export default async function RootLayout({
+export default function RootLayout({
   children,
-}: Readonly<{
+}: {
   children: React.ReactNode;
-}>) {
-  const initialLang = await getLocaleFromHeader()
-
+}) {
   return (
-    <html lang={initialLang} suppressHydrationWarning>
+    <html lang="en">
       <body className={inter.className}>
         <HtmlLangSync />
         {children}
         <Analytics />
       </body>
     </html>
-  )
+  );
 }
