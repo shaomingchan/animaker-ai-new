@@ -21,15 +21,6 @@ export function proxy(req: NextRequest) {
     return Response.redirect(new URL('/login', req.nextUrl))
   }
 
-  // Inject locale into a request header so RootLayout can read it via headers()
-  // (cookies() crashes in RootLayout on Next.js 16 + Vercel serverless)
-  const langCookie = req.cookies.get('lang')
-  if (langCookie?.value) {
-    const requestHeaders = new Headers(req.headers)
-    requestHeaders.set('x-locale', langCookie.value)
-    return NextResponse.next({ request: { headers: requestHeaders } })
-  }
-
   return NextResponse.next()
 }
 
