@@ -1,5 +1,6 @@
 ﻿"use client";
 
+import { Suspense } from "react";
 import Link from "next/link";
 import DemoCarousel from "@/components/DemoCarousel";
 import LanguageSwitcher from "@/components/LanguageSwitcher";
@@ -20,7 +21,7 @@ export default function Home() {
           <div className="flex items-center gap-6">
             <a href="#pricing" className="text-sm text-gray-400 hover:text-white transition">{t("nav.pricing")}</a>
             <a href="#examples" className="text-sm text-gray-400 hover:text-white transition">{t("nav.examples")}</a>
-            <LanguageSwitcher />
+            <Suspense fallback={null}><LanguageSwitcher /></Suspense>
             <Link href="/login" className="text-sm bg-white text-black px-4 py-2 rounded-full font-medium hover:bg-gray-200 transition">
               {t("nav.getStarted")}
             </Link>
