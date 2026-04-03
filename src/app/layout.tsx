@@ -1,12 +1,12 @@
 import type { Metadata } from "next";
-import { Inter } from "next/font/google";
+// import { Inter } from "next/font/google"; // DEBUG: temporarily disabled
 import { cookies } from "next/headers";
-import { Analytics } from "@vercel/analytics/react";
-import HtmlLangSync from "@/components/HtmlLangSync";
+// import { Analytics } from "@vercel/analytics/react"; // DEBUG: disabled
+// import HtmlLangSync from "@/components/HtmlLangSync"; // DEBUG: disabled
 import { getLocaleFromCookie } from "@/i18n/translations";
 import "./globals.css";
 
-const inter = Inter({ subsets: ["latin"] });
+// const inter = Inter({ subsets: ["latin"] }); // DEBUG: disabled
 
 export const metadata: Metadata = {
   title: "AI Dance Video Generator - Upload Your Own Dance Reference | Animaker.AI",
@@ -59,10 +59,10 @@ export default async function RootLayout({
 
   return (
     <html lang={initialLang} suppressHydrationWarning>
-      <body className={inter.className}>
-        <HtmlLangSync />
+      <body>
+        {/* HtmlLangSync temporarily disabled */}
         {children}
-        <Analytics />
+        {/* Analytics temporarily disabled */}
       </body>
     </html>
   );
