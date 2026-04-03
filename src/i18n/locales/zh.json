@@ -1,0 +1,307 @@
+{
+  "nav": {
+    "pricing": "价格",
+    "examples": "示例",
+    "getStarted": "开始使用"
+  },
+  "hero": {
+    "badge": "✨ AI 驱动的动作迁移",
+    "title": "上传您自己的舞蹈视频",
+    "titleHighlight": "AI 从照片创建定制舞蹈视频",
+    "description": "上传一张照片和一个参考视频。我们的 AI 将精确的动作迁移到您照片中的人物。无需编辑技能。",
+    "tryNow": "立即试用 — $1.99",
+    "seeExamples": "查看示例"
+  },
+  "pricing": {
+    "title": "简单定价",
+    "subtitle": "无需订阅。按次付费或购买套餐节省费用。",
+    "single": {
+      "name": "单次",
+      "price": "$1.99",
+      "desc": "1个视频",
+      "features": [
+        "最长 30 秒视频",
+        "下载和分享",
+        "商业使用"
+      ]
+    },
+    "pack": {
+      "name": "10次套餐",
+      "price": "$9.99",
+      "badge": "最超值",
+      "save": "节省 50%",
+      "desc": "10个视频",
+      "features": [
+        "最长 30 秒视频",
+        "下载和分享",
+        "商业使用",
+        "优先队列"
+      ]
+    },
+    "getStarted": "开始使用"
+  },
+  "footer": {
+    "copyright": "© 2026 Animaker.AI. 保留所有权利。",
+    "terms": "条款",
+    "privacy": "隐私",
+    "contact": "联系",
+    "support": "support@animaker.dev"
+  },
+  "howItWorks": {
+    "title": "三步搞定",
+    "step1": {
+      "title": "上传照片",
+      "desc": "任何有人的照片。自拍、肖像、全身照都可以。"
+    },
+    "step2": {
+      "title": "选择动作",
+      "desc": "上传参考视频或从我们的预设库中选择。"
+    },
+    "step3": {
+      "title": "下载视频",
+      "desc": "AI 在几分钟内生成您的视频。随时下载和分享。"
+    }
+  },
+  "examples": {
+    "title": "实际效果",
+    "subtitle": "静态照片 → AI 动画视频。真实结果，无需编辑。",
+    "hover": "悬停查看魔法 ✨"
+  },
+  "faq": {
+    "title": "常见问题",
+    "items": [
+      {
+        "q": "需要多长时间？",
+        "a": "大多数视频在 5-15 分钟内完成，具体取决于长度。"
+      },
+      {
+        "q": "支持哪些照片格式？",
+        "a": "JPG、PNG、WebP。照片应清晰显示人物。"
+      },
+      {
+        "q": "支持多长的视频？",
+        "a": "最长 30 秒。更长的视频需要更多积分。"
+      },
+      {
+        "q": "可以商用吗？",
+        "a": "可以！所有生成的视频都归您所有，可随意使用。"
+      },
+      {
+        "q": "有内容审核吗？",
+        "a": "有。所有上传内容都会被我们的 AI 内容审核系统自动筛查。NSFW、色情、暴力或其他不当内容将被拒绝。多次违反内容政策的账号可能会被封禁。"
+      },
+      {
+        "q": "可以使用自己的舞蹈视频作为参考吗？",
+        "a": "可以！上传任何舞蹈视频，我们的 AI 会将这些动作精确转移到您的照片上。"
+      },
+      {
+        "q": "支持哪些视频格式？",
+        "a": "MP4、MOV、WebM。大多数常见视频格式都支持。"
+      },
+      {
+        "q": "如果生成失败会怎样？",
+        "a": "您的积分会自动退回。我们还会发送邮件告知详情。"
+      },
+      {
+        "q": "可以退款吗？",
+        "a": "可以，如果您在 7 天内未使用任何积分。请联系 support@animaker.dev"
+      },
+      {
+        "q": "积分会过期吗？",
+        "a": "不会。您的积分永不过期。"
+      },
+      {
+        "q": "有免费试用吗？",
+        "a": "目前没有，但我们的单次套餐只需 $1.99，可以试用。"
+      },
+      {
+        "q": "生成的视频归谁所有？",
+        "a": "归您所有。您对所有生成的视频拥有完整的商业使用权。"
+      },
+      {
+        "q": "适合 Instagram Reels 吗？",
+        "a": "非常适合！我们的 9:16 比例完美适配 Instagram Reels、TikTok 和 YouTube Shorts。"
+      },
+      {
+        "q": "可以用于 YouTube 视频吗？",
+        "a": "当然可以。生成的视频非常适合 YouTube 内容。"
+      },
+      {
+        "q": "如何为 TikTok 制作照片跳舞视频？",
+        "a": "上传您的照片，选择一个舞蹈视频，我们会在几分钟内生成适合 TikTok 的 9:16 视频。"
+      }
+    ]
+  },
+  "common": {
+    "backToHome": "← 返回首页",
+    "dashboard": "控制台",
+    "loading": "加载中..."
+  },
+  "login": {
+    "title": "欢迎",
+    "subtitle": "登录开始创作精彩视频",
+    "redirecting": "跳转中...",
+    "continueWithGoogle": "使用 Google 登录",
+    "termsNotice": "登录即表示您同意我们的服务条款和隐私政策"
+  },
+  "dashboard": {
+    "newVideo": "+ 新建视频",
+    "creditsRemaining": "剩余积分",
+    "buyCredits": "购买积分",
+    "currentPlan": "当前套餐",
+    "totalVideos": "视频总数",
+    "yourVideos": "您的视频",
+    "createNew": "创建新视频 →",
+    "noVideos": "暂无视频",
+    "createFirst": "创建您的第一个视频 →",
+    "status": {
+      "queued": "排队中",
+      "uploading": "上传中",
+      "running": "处理中",
+      "success": "已完成",
+      "failed": "失败"
+    }
+  },
+  "create": {
+    "title": "创建新视频",
+    "subtitle": "上传一张照片和一段参考舞蹈视频",
+    "credits": "积分",
+    "buyCreditsCta": "购买积分 — $1.99",
+    "buyCreditsToGenerate": "购买积分以生成视频",
+    "generate": "生成视频 — 1 积分",
+    "noCredits": {
+      "title": "积分不足",
+      "description": "购买积分以生成视频"
+    },
+    "photo": {
+      "label": "人物照片",
+      "cta": "点击上传照片",
+      "hint": "JPG、PNG、WebP · 最大 50MB"
+    },
+    "video": {
+      "label": "参考视频",
+      "cta": "点击上传视频",
+      "hint": "MP4、MOV · 最大 200MB · 最长 30 秒"
+    },
+    "progress": {
+      "uploadingPhoto": "正在上传照片...",
+      "uploadingVideo": "正在上传视频...",
+      "startingGeneration": "正在启动 AI 生成...",
+      "processing": "处理中..."
+    },
+    "alerts": {
+      "imageFile": "请上传图片文件",
+      "imageTooLarge": "图片必须小于 50MB",
+      "videoFile": "请上传视频文件",
+      "videoTooLarge": "视频必须小于 200MB",
+      "videoTooLong": "视频必须控制在 30 秒以内",
+      "signInRequired": "请先登录",
+      "checkoutUnavailable": "当前账户无法发起购买",
+      "missingFiles": "请同时上传照片和视频",
+      "genericError": "出错了"
+    }
+  },
+  "termsPage": {
+    "title": "服务条款",
+    "lastUpdated": "最后更新：2026年3月7日",
+    "acceptance": {
+      "title": "1. 条款接受",
+      "body": "访问并使用 Animaker.AI，即表示您同意受这些服务条款的约束。"
+    },
+    "service": {
+      "title": "2. 服务描述",
+      "body": "Animaker.AI 提供 AI 视频生成服务，将参考视频中的动作转移到用户上传的照片中。"
+    },
+    "responsibilities": {
+      "title": "3. 用户责任",
+      "intro": "您同意：",
+      "items": [
+        "只上传您拥有或有权使用的内容",
+        "不上传非法、有害或不当内容",
+        "不将服务用于欺诈目的",
+        "遵守所有适用法律和法规"
+      ]
+    },
+    "moderation": {
+      "title": "4. 内容审核",
+      "body": "我们的 AI 视频生成服务由 RunningHub API 提供支持，包含内置内容审核和 NSFW 过滤功能。"
+    },
+    "ip": {
+      "title": "5. 知识产权",
+      "body": "您保留对上传内容和生成视频的所有权利。生成视频可商用或个人使用。"
+    },
+    "payments": {
+      "title": "6. 支付与退款",
+      "body": "所有支付通过 Creem 安全处理。如因我方技术问题导致视频生成失败，24小时内可申请退款。"
+    },
+    "liability": {
+      "title": "7. 责任限制",
+      "body": "我们按现状提供服务，不提供任何明示或暗示保证。"
+    },
+    "disputes": {
+      "title": "8. 争议解决",
+      "intro": "任何争议将通过以下方式解决：",
+      "items": [
+        "双方真诚协商",
+        "如无法解决，通过适用法律的约束性仲裁",
+        "管辖法律：服务运营所在司法管辖区"
+      ]
+    },
+    "contact": {
+      "title": "9. 联系我们",
+      "body": "如有疑问，请联系我们："
+    }
+  },
+  "privacyPage": {
+    "title": "隐私政策",
+    "lastUpdated": "最后更新：2026年3月7日",
+    "collection": {
+      "title": "1. 我们收集的信息",
+      "intro": "我们直接收集您的信息，包括：",
+      "items": [
+        "账户信息（邮箱、姓名）",
+        "您上传的照片和视频",
+        "支付信息（由支付提供商安全处理）",
+        "使用数据和analytics"
+      ]
+    },
+    "usage": {
+      "title": "2. 我们如何使用信息",
+      "intro": "我们使用您的信息来：",
+      "items": [
+        "提供和改进 AI 视频生成服务",
+        "处理支付和管理账户",
+        "发送服务相关通信",
+        "分析使用情况以改善体验"
+      ]
+    },
+    "storage": {
+      "title": "3. 数据存储与安全",
+      "body": "您上传的照片和生成的视频安全存储在我们的服务器上。生成视频在30天后自动删除。"
+    },
+    "thirdParty": {
+      "title": "4. 第三方服务",
+      "intro": "我们使用以下第三方服务：",
+      "items": [
+        "支付处理（Creem）",
+        "AI 视频生成（RunningHub API，含内容审核）",
+        "云存储（Cloudflare R2）",
+        "Analytics"
+      ]
+    },
+    "rights": {
+      "title": "5. 您的权利",
+      "intro": "您有权：",
+      "items": [
+        "访问您的个人数据",
+        "请求删除您的数据",
+        "选择退出营销通讯",
+        "导出您生成的视频"
+      ]
+    },
+    "contact": {
+      "title": "6. 联系我们",
+      "body": "如有隐私相关问题，请联系我们："
+    }
+  }
+}

@@ -1,0 +1,307 @@
+{
+  "nav": {
+    "pricing": "Pricing",
+    "examples": "Examples",
+    "getStarted": "Get Started"
+  },
+  "hero": {
+    "badge": "✨ AI-Powered Motion Transfer",
+    "title": "Upload Your Own Dance Video",
+    "titleHighlight": "AI Creates Custom Dance Videos from Photos",
+    "description": "Upload a photo and a reference video. Our AI transfers the exact movements to the person in your photo. No editing skills needed.",
+    "tryNow": "Try It Now — $1.99",
+    "seeExamples": "See Examples"
+  },
+  "pricing": {
+    "title": "Simple Pricing",
+    "subtitle": "No subscriptions required. Pay per use or save with packs.",
+    "single": {
+      "name": "Single",
+      "price": "$1.99",
+      "desc": "1 video",
+      "features": [
+        "Up to 30s video",
+        "Download & share",
+        "Commercial use"
+      ]
+    },
+    "pack": {
+      "name": "10-Pack",
+      "price": "$9.99",
+      "badge": "Best Value",
+      "save": "Save 50%",
+      "desc": "10 videos",
+      "features": [
+        "Up to 30s video",
+        "Download & share",
+        "Commercial use",
+        "Priority queue"
+      ]
+    },
+    "getStarted": "Get Started"
+  },
+  "footer": {
+    "copyright": "© 2026 Animaker.AI. All rights reserved.",
+    "terms": "Terms",
+    "privacy": "Privacy",
+    "contact": "Contact",
+    "support": "support@animaker.dev"
+  },
+  "howItWorks": {
+    "title": "Three Steps. That's It.",
+    "step1": {
+      "title": "Upload Photo",
+      "desc": "Any photo with a person. Selfie, portrait, full body — all work."
+    },
+    "step2": {
+      "title": "Pick a Motion",
+      "desc": "Upload a reference video or choose from our preset library."
+    },
+    "step3": {
+      "title": "Download Video",
+      "desc": "AI generates your video in minutes. Download and share anywhere."
+    }
+  },
+  "examples": {
+    "title": "See It In Action",
+    "subtitle": "Static photo → AI-animated video. Real results, no editing.",
+    "hover": "Hover to see the magic ✨"
+  },
+  "faq": {
+    "title": "FAQ",
+    "items": [
+      {
+        "q": "How long does it take?",
+        "a": "Most videos are ready in 5-15 minutes depending on length."
+      },
+      {
+        "q": "What photo formats work?",
+        "a": "JPG, PNG, WebP. The photo should clearly show a person."
+      },
+      {
+        "q": "What video length is supported?",
+        "a": "Up to 30 seconds. Longer videos cost more credits."
+      },
+      {
+        "q": "Can I use it commercially?",
+        "a": "Yes! All generated videos are yours to use however you want."
+      },
+      {
+        "q": "Is there content moderation?",
+        "a": "Yes. All uploaded content is automatically screened by our AI content moderation system. NSFW, sexually explicit, violent, or otherwise inappropriate content is rejected. Accounts that repeatedly violate our content policy may be suspended."
+      },
+      {
+        "q": "Can I use my own dance video as reference?",
+        "a": "Yes! Upload any dance video and our AI will transfer those exact movements to your photo."
+      },
+      {
+        "q": "What video formats are supported?",
+        "a": "MP4, MOV, WebM. Most common video formats work."
+      },
+      {
+        "q": "What happens if generation fails?",
+        "a": "You'll get your credits back automatically. We also send you an email with details."
+      },
+      {
+        "q": "Can I get a refund?",
+        "a": "Yes, within 7 days if you haven't used any credits. Contact support@animaker.dev"
+      },
+      {
+        "q": "Do credits expire?",
+        "a": "No. Your credits never expire."
+      },
+      {
+        "q": "Is there a free trial?",
+        "a": "Not currently, but our Single plan is only $1.99 to try it out."
+      },
+      {
+        "q": "Who owns the generated videos?",
+        "a": "You do. You have full commercial rights to all videos you generate."
+      },
+      {
+        "q": "Is this suitable for Instagram Reels?",
+        "a": "Yes! Our 9:16 aspect ratio is perfect for Instagram Reels, TikTok, and YouTube Shorts."
+      },
+      {
+        "q": "Can I use it for YouTube videos?",
+        "a": "Absolutely. Generated videos work great for YouTube content."
+      },
+      {
+        "q": "How to make photo dance for TikTok?",
+        "a": "Upload your photo, pick a dance video, and we'll generate a TikTok-ready 9:16 video in minutes."
+      }
+    ]
+  },
+  "common": {
+    "backToHome": "← Back to Home",
+    "dashboard": "Dashboard",
+    "loading": "Loading..."
+  },
+  "login": {
+    "title": "Welcome",
+    "subtitle": "Sign in to start creating amazing videos",
+    "redirecting": "Redirecting...",
+    "continueWithGoogle": "Continue with Google",
+    "termsNotice": "By signing in, you agree to our Terms of Service and Privacy Policy"
+  },
+  "dashboard": {
+    "newVideo": "+ New Video",
+    "creditsRemaining": "Credits Remaining",
+    "buyCredits": "Buy Credits",
+    "currentPlan": "Current Plan",
+    "totalVideos": "Total Videos",
+    "yourVideos": "Your Videos",
+    "createNew": "Create New →",
+    "noVideos": "No videos yet",
+    "createFirst": "Create your first video →",
+    "status": {
+      "queued": "Queued",
+      "uploading": "Uploading",
+      "running": "Running",
+      "success": "Done",
+      "failed": "Failed"
+    }
+  },
+  "create": {
+    "title": "Create New Video",
+    "subtitle": "Upload a photo and a reference dance video",
+    "credits": "credits",
+    "buyCreditsCta": "Buy Credits — $1.99",
+    "buyCreditsToGenerate": "Buy Credits to Generate",
+    "generate": "Generate Video — 1 Credit",
+    "noCredits": {
+      "title": "No credits remaining",
+      "description": "Purchase credits to generate videos"
+    },
+    "photo": {
+      "label": "Person Photo",
+      "cta": "Click to upload photo",
+      "hint": "JPG, PNG, WebP · Max 50MB"
+    },
+    "video": {
+      "label": "Reference Video",
+      "cta": "Click to upload video",
+      "hint": "MP4, MOV · Max 200MB · Up to 30s"
+    },
+    "progress": {
+      "uploadingPhoto": "Uploading photo...",
+      "uploadingVideo": "Uploading video...",
+      "startingGeneration": "Starting AI generation...",
+      "processing": "Processing..."
+    },
+    "alerts": {
+      "imageFile": "Please upload an image file",
+      "imageTooLarge": "Image must be under 50MB",
+      "videoFile": "Please upload a video file",
+      "videoTooLarge": "Video must be under 200MB",
+      "videoTooLong": "Video must be 30 seconds or shorter",
+      "signInRequired": "Please sign in to continue",
+      "checkoutUnavailable": "Unable to start checkout for this account",
+      "missingFiles": "Please upload both a photo and a video",
+      "genericError": "Something went wrong"
+    }
+  },
+  "termsPage": {
+    "title": "Terms of Service",
+    "lastUpdated": "Last updated: March 7, 2026",
+    "acceptance": {
+      "title": "1. Acceptance of Terms",
+      "body": "By accessing and using Animaker.AI, you agree to be bound by these Terms of Service. If you do not agree, please do not use our service."
+    },
+    "service": {
+      "title": "2. Service Description",
+      "body": "Animaker.AI provides AI-powered video generation services that transfer motion from reference videos to user-uploaded photos. The service is provided on a pay-per-use basis."
+    },
+    "responsibilities": {
+      "title": "3. User Responsibilities",
+      "intro": "You agree to:",
+      "items": [
+        "Only upload content you own or have permission to use",
+        "Not upload illegal, harmful, or inappropriate content",
+        "Not use the service for fraudulent purposes",
+        "Comply with all applicable laws and regulations"
+      ]
+    },
+    "moderation": {
+      "title": "4. Content Moderation",
+      "body": "Our AI video generation service is powered by RunningHub API, which includes built-in content moderation and NSFW filtering. We do not allow generation of inappropriate, harmful, or illegal content. Violations may result in account suspension."
+    },
+    "ip": {
+      "title": "5. Intellectual Property",
+      "body": "You retain all rights to your uploaded content and generated videos. You grant us a limited license to process your content for service delivery. Generated videos are yours to use commercially or personally."
+    },
+    "payments": {
+      "title": "6. Payment and Refunds",
+      "body": "All payments are processed securely through Creem. Refunds are available within 24 hours if the video generation fails due to technical issues on our end."
+    },
+    "liability": {
+      "title": "7. Limitation of Liability",
+      "body": "We provide the service as is without warranties. We are not liable for any indirect, incidental, or consequential damages arising from your use of the service."
+    },
+    "disputes": {
+      "title": "8. Dispute Resolution",
+      "intro": "Any disputes arising from these terms or your use of the service shall be resolved through:",
+      "items": [
+        "Good faith negotiation between parties",
+        "If unresolved, binding arbitration under applicable law",
+        "Governing law: Laws of the jurisdiction where the service is operated"
+      ]
+    },
+    "contact": {
+      "title": "9. Contact",
+      "body": "For questions about these terms, contact:"
+    }
+  },
+  "privacyPage": {
+    "title": "Privacy Policy",
+    "lastUpdated": "Last updated: March 7, 2026",
+    "collection": {
+      "title": "1. Information We Collect",
+      "intro": "We collect information you provide directly to us, including:",
+      "items": [
+        "Account information (email, name)",
+        "Photos and videos you upload for processing",
+        "Payment information (processed securely by our payment provider)",
+        "Usage data and analytics"
+      ]
+    },
+    "usage": {
+      "title": "2. How We Use Your Information",
+      "intro": "We use your information to:",
+      "items": [
+        "Provide and improve our AI video generation service",
+        "Process your payments and manage your account",
+        "Send service-related communications",
+        "Analyze usage patterns to enhance user experience"
+      ]
+    },
+    "storage": {
+      "title": "3. Data Storage and Security",
+      "body": "Your uploaded photos and generated videos are stored securely on our servers. We implement industry-standard security measures to protect your data. Generated videos are automatically deleted after 30 days unless you choose to save them."
+    },
+    "thirdParty": {
+      "title": "4. Third-Party Services",
+      "intro": "We use third-party services for:",
+      "items": [
+        "Payment processing (Creem)",
+        "AI video generation (RunningHub API with built-in content moderation)",
+        "Cloud storage (Cloudflare R2)",
+        "Analytics"
+      ]
+    },
+    "rights": {
+      "title": "5. Your Rights",
+      "intro": "You have the right to:",
+      "items": [
+        "Access your personal data",
+        "Request deletion of your data",
+        "Opt out of marketing communications",
+        "Export your generated videos"
+      ]
+    },
+    "contact": {
+      "title": "6. Contact Us",
+      "body": "For privacy-related questions, contact us at:"
+    }
+  }
+}

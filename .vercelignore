@@ -1,0 +1,16 @@
+node_modules
+.next
+vendor
+.git
+.claude
+.cursor
+.agent
+.codebuddy
+.codex
+.continue
+.gemini
+.kiro
+.opencode
+.qoder
+.roo
+.github
