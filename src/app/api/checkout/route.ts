@@ -41,8 +41,8 @@ export async function GET(request: NextRequest) {
       },
       body: JSON.stringify({
         product_id: productId,
+        // Creem: only one of customer.id or customer.email, not both
         customer: {
-          id: session.user.id,
           email: session.user.email,
         },
         metadata: {
