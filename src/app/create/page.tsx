@@ -89,9 +89,9 @@ export default function CreatePage() {
       }
 
       // Select product ID based on type
-      const productId = productType === '10pack' 
+      const productId = productType === '10pack'
         ? process.env.NEXT_PUBLIC_CREEM_PRODUCT_ID_10PACK || 'prod_2g1c2h6Qn4x8b2XHQX3E4F'
-        : process.env.NEXT_PUBLIC_CREEM_PRODUCT_ID_SINGLE || 'prod_4VHIjHB1NzDa4CJPb9zFJ1';
+        : process.env.NEXT_PUBLIC_CREEM_PRODUCT_ID_SINGLE || 'prod_28agLy2oWWjgUOe6hHnHKD';
 
       // Creem checkout via GET with query params (camelCase per SDK)
       const params = new URLSearchParams({
