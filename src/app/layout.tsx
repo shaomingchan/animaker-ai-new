@@ -48,8 +48,14 @@ export default async function RootLayout({
 }: Readonly<{
   children: React.ReactNode;
 }>) {
-  const cookieStore = await cookies();
-  const initialLang = getLocaleFromCookie(cookieStore.toString()) ?? "en";
+  let initialLang = "en";
+  try {
+    const cookieStore = await cookies();
+    initialLang = getLocaleFromCookie(cookieStore.toString()) ?? "en";
+  } catch {
+    // cookies() unavailable in some edge runtimes; fall back to "en"
+    initialLang = "en";
+  }
 
   return (
     <html lang={initialLang} suppressHydrationWarning>
