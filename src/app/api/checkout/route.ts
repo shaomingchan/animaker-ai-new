@@ -48,7 +48,7 @@ export async function GET(request: NextRequest) {
         metadata: {
           referenceId: session.user.id,
         },
-        success_url: 'https://animaker.dev/dashboard?payment=success',
+        success_url: process.env.NEXTAUTH_URL ? `${process.env.NEXTAUTH_URL}/dashboard?payment=success` : 'https://animaker.dev/dashboard?payment=success',
       }),
     });
 

@@ -24,10 +24,25 @@ interface UserInfo {
 export default function DashboardPage() {
   const [user, setUser] = useState<UserInfo | null>(null);
   const [loading, setLoading] = useState(true);
+  const [successMessage, setSuccessMessage] = useState<string | null>(null);
   const router = useRouter();
   const { t } = useTranslation();
 
   useEffect(() => {
+    // Check for payment success in URL
+    const urlParams = new URLSearchParams(typeof window !== 'undefined' ? window.location.search : '');
+    const paymentSuccess = urlParams.get('payment') === 'success';
+
+    if (paymentSuccess) {
+      setSuccessMessage(t("dashboard.paymentSuccess") || "Payment successful! Credits added.");
+      // Remove payment param from URL
+      if (typeof window !== 'undefined') {
+        const newUrl = new URL(window.location.href);
+        newUrl.searchParams.delete('payment');
+        window.history.replaceState({}, '', newUrl.toString());
+      }
+    }
+
     fetch("/api/user/me")
       .then((r) => {
         if (!r.ok) {
@@ -59,7 +74,7 @@ export default function DashboardPage() {
       <nav className="fixed top-0 w-full z-50 bg-black/80 backdrop-blur-sm border-b border-white/10">
         <div className="max-w-6xl mx-auto px-6 h-16 flex items-center justify-between">
           <Link href="/" className="text-xl font-bold bg-gradient-to-r from-purple-400 to-pink-400 bg-clip-text text-transparent">
-            Animaker.dev
+            Animaker.AI
           </Link>
           <Link href="/create" className="text-sm bg-white text-black px-4 py-2 rounded-full font-medium hover:bg-gray-200 transition">
             {t("dashboard.newVideo")}
@@ -74,6 +89,19 @@ export default function DashboardPage() {
           </div>
         ) : (
           <>
+            {/* Success Message */}
+            {successMessage && (
+              <div className="bg-green-500/10 border border-green-500/20 rounded-xl p-4 mb-6 flex items-center justify-between">
+                <p className="text-green-400 font-medium">{successMessage}</p>
+                <button
+                  onClick={() => setSuccessMessage(null)}
+                  className="text-green-400 hover:text-green-300 transition"
+                >
+                  ✕
+                </button>
+              </div>
+            )}
+
             {/* Stats */}
             <div className="grid md:grid-cols-3 gap-6 mb-12">
               <div className="bg-white/5 border border-white/10 rounded-2xl p-6">

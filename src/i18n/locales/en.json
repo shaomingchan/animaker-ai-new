@@ -154,6 +154,7 @@
     "createNew": "Create New →",
     "noVideos": "No videos yet",
     "createFirst": "Create your first video →",
+    "paymentSuccess": "Payment successful! Credits added to your account.",
     "status": {
       "queued": "Queued",
       "uploading": "Uploading",

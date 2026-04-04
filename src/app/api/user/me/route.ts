@@ -30,13 +30,13 @@ export async function GET() {
     email: user.email || 'No email',
     credits: user.credits ?? 0,
     plan: user.plan || 'free',
-    tasks: userTasks.map(t => ({
-      id: t.id,
-      status: t.status || 'queued',
-      resolution: t.resolution ?? 540,
-      duration: t.duration ?? 14,
-      createdAt: t.createdAt?.toISOString() || new Date().toISOString(),
-      completedAt: t.completedAt?.toISOString() || null,
+    tasks: userTasks.map(task => ({
+      id: task.id,
+      status: task.status || 'queued',
+      resolution: task.resolution ?? 540,
+      duration: task.duration ?? 14,
+      createdAt: task.createdAt?.toISOString() || new Date().toISOString(),
+      completedAt: task.completedAt?.toISOString() || null,
     })),
   });
 }

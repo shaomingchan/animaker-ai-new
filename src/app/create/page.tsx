@@ -16,6 +16,7 @@ export default function CreatePage() {
   const [uploadProgress, setUploadProgress] = useState<string>("");
   const [credits, setCredits] = useState<number | null>(null);
   const [buyingCredits, setBuyingCredits] = useState(false);
+  const [errorMessage, setErrorMessage] = useState<string>("");
   const photoRef = useRef<HTMLInputElement>(null);
   const videoRef = useRef<HTMLInputElement>(null);
   const router = useRouter();
@@ -38,8 +39,15 @@ export default function CreatePage() {
   const handlePhoto = (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
     if (!file) return;
-    if (!file.type.startsWith("image/")) return alert(t("create.alerts.imageFile"));
-    if (file.size > 50 * 1024 * 1024) return alert(t("create.alerts.imageTooLarge"));
+    if (!file.type.startsWith("image/")) {
+      setErrorMessage(t("create.alerts.imageFile"));
+      return;
+    }
+    if (file.size > 50 * 1024 * 1024) {
+      setErrorMessage(t("create.alerts.imageTooLarge"));
+      return;
+    }
+    setErrorMessage("");
     setPhoto(file);
     setPhotoPreview(URL.createObjectURL(file));
   };
@@ -47,13 +55,20 @@ export default function CreatePage() {
   const handleVideo = (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
     if (!file) return;
-    if (!file.type.startsWith("video/")) return alert(t("create.alerts.videoFile"));
-    if (file.size > 200 * 1024 * 1024) return alert(t("create.alerts.videoTooLarge"));
-    
+    if (!file.type.startsWith("video/")) {
+      setErrorMessage(t("create.alerts.videoFile"));
+      return;
+    }
+    if (file.size > 200 * 1024 * 1024) {
+      setErrorMessage(t("create.alerts.videoTooLarge"));
+      return;
+    }
+
+    setErrorMessage("");
     setVideo(file);
     const videoUrl = URL.createObjectURL(file);
     setVideoPreview(videoUrl);
-    
+
     // Get video duration
     const videoElement = document.createElement('video');
     videoElement.preload = 'metadata';
@@ -65,7 +80,7 @@ export default function CreatePage() {
         setVideoPreview("");
         setVideoDuration(0);
         if (videoRef.current) videoRef.current.value = "";
-        alert(t("create.alerts.videoTooLong"));
+        setErrorMessage(t("create.alerts.videoTooLong"));
         return;
       }
       setVideoDuration(duration);
@@ -100,7 +115,7 @@ export default function CreatePage() {
       });
       router.push(`/api/checkout?${params.toString()}`);
     } catch (error) {
-      alert(error instanceof Error ? error.message : t("create.alerts.genericError"));
+      setErrorMessage(error instanceof Error ? error.message : t("create.alerts.genericError"));
     } finally {
       setBuyingCredits(false);
     }
@@ -141,7 +156,11 @@ export default function CreatePage() {
   };
 
   const handleSubmit = async () => {
-    if (!photo || !video) return alert(t("create.alerts.missingFiles"));
+    setErrorMessage("");
+    if (!photo || !video) {
+      setErrorMessage(t("create.alerts.missingFiles"));
+      return;
+    }
     if (credits !== null && credits < 1) {
       return handleBuyCredits();
     }
@@ -175,7 +194,7 @@ export default function CreatePage() {
       if (!res.ok) throw new Error(data.error || "Failed to create task");
       router.push(`/task/${data.taskId}`);
     } catch (err: unknown) {
-      alert(err instanceof Error ? err.message : t("create.alerts.genericError"));
+      setErrorMessage(err instanceof Error ? err.message : t("create.alerts.genericError"));
     } finally {
       setSubmitting(false);
       setUploadProgress("");
@@ -205,6 +224,19 @@ export default function CreatePage() {
       <div className="pt-28 pb-20 px-6 max-w-4xl mx-auto">
         <h1 className="text-3xl font-bold mb-2">{t("create.title")}</h1>
         <p className="text-gray-400 mb-10">{t("create.subtitle")}</p>
+
+        {/* Error Message */}
+        {errorMessage && (
+          <div className="mb-6 bg-red-500/10 border border-red-500/20 rounded-xl p-4 flex items-center justify-between">
+            <p className="text-red-400">{errorMessage}</p>
+            <button
+              onClick={() => setErrorMessage("")}
+              className="text-red-400 hover:text-red-300 transition"
+            >
+              ✕
+            </button>
+          </div>
+        )}
 
         {/* No credits banner */}
         {credits !== null && credits < 1 && (
