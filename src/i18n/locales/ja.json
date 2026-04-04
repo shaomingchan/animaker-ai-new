@@ -154,6 +154,7 @@
     "createNew": "新規作成 →",
     "noVideos": "まだ動画がありません",
     "createFirst": "最初の動画を作成 →",
+    "paymentSuccess": "支払い完了！クレジットがアカウントに追加されました。",
     "status": {
       "queued": "待機中",
       "uploading": "アップロード中",

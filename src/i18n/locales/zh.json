@@ -154,6 +154,7 @@
     "createNew": "创建新视频 →",
     "noVideos": "暂无视频",
     "createFirst": "创建您的第一个视频 →",
+    "paymentSuccess": "支付成功！积分已添加到您的账户。",
     "status": {
       "queued": "排队中",
       "uploading": "上传中",
