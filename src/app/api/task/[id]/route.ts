@@ -82,15 +82,28 @@ export async function POST(
       const resultKey = `tasks/${taskId}/result.mp4`;
       await uploadToR2(resultKey, videoBuffer, 'video/mp4');
 
-      // Update database
-      await db.update(tasks)
+      const updatedTask = await db.update(tasks)
         .set({
           status: 'success',
           resultKey,
           rhCoinsCost: result.usage?.consumeCoins ? parseInt(result.usage.consumeCoins) : null,
           completedAt: new Date(),
         })
-        .where(eq(tasks.id, taskId));
+        .where(and(eq(tasks.id, taskId), eq(tasks.status, task.status)))
+        .returning({ id: tasks.id });
+
+      if (updatedTask.length === 0) {
+        const latestTask = await db.query.tasks.findFirst({
+          where: and(eq(tasks.id, taskId), eq(tasks.userId, userId)),
+        });
+
+        return NextResponse.json({
+          id: taskId,
+          status: latestTask?.status ?? 'running',
+          resultUrl: latestTask?.resultKey ? await getPresignedUrl(latestTask.resultKey, 3600) : null,
+          errorMessage: latestTask?.errorMessage ?? null,
+        });
+      }
 
       return NextResponse.json({
         id: taskId,
@@ -100,18 +113,20 @@ export async function POST(
     }
 
     if (result.status === 'FAILED') {
-      // NOTE: neon-http driver does not support .transaction(). Sequential ops instead.
-      await db.update(tasks)
+      const failedTask = await db.update(tasks)
         .set({
           status: 'failed',
           errorMessage: result.errorMessage || 'Generation failed',
           completedAt: new Date(),
         })
-        .where(eq(tasks.id, taskId));
+        .where(and(eq(tasks.id, taskId), eq(tasks.status, task.status)))
+        .returning({ id: tasks.id });
 
-      await db.update(users)
-        .set({ credits: sql`${users.credits} + 1` })
-        .where(sql`${users.id} = ${userId}`);
+      if (failedTask.length > 0) {
+        await db.update(users)
+          .set({ credits: sql`${users.credits} + 1` })
+          .where(sql`${users.id} = ${userId}`);
+      }
 
       return NextResponse.json({
         id: taskId,

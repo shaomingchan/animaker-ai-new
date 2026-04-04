@@ -12,7 +12,10 @@ export default function LoginPage() {
   const handleGoogleLogin = async () => {
     setLoading(true);
     const callbackUrl = typeof window !== "undefined"
-      ? (new URLSearchParams(window.location.search).get("callbackUrl") || "/dashboard")
+      ? (() => {
+          const params = new URLSearchParams(window.location.search);
+          return params.get("callbackUrl") || params.get("redirect") || "/dashboard";
+        })()
       : "/dashboard";
     await signIn("google", { callbackUrl });
   };

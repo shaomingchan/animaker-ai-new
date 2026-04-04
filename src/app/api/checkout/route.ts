@@ -7,7 +7,7 @@ export async function GET(request: NextRequest) {
   // Check if user is logged in
   if (!session?.user?.id) {
     const loginUrl = new URL('/login', request.url);
-    loginUrl.searchParams.set('redirect', request.url);
+    loginUrl.searchParams.set('callbackUrl', request.url);
     return NextResponse.redirect(loginUrl);
   }
 
@@ -17,12 +17,6 @@ export async function GET(request: NextRequest) {
   if (!productId) {
     return NextResponse.json({ error: 'Product ID required' }, { status: 400 });
   }
-
-  // Health check logs before calling Creem
-  console.log('[Checkout] Calling Creem with productId:', productId);
-  console.log('[Checkout] CREEM_API_KEY set:', !!process.env.CREEM_API_KEY);
-  console.log('[Checkout] CREEM_API_KEY prefix:', process.env.CREEM_API_KEY?.substring(0, 10));
-  console.log('[Checkout] session user:', session?.user?.id, session?.user?.email);
 
   if (!process.env.CREEM_API_KEY) {
     return NextResponse.json(

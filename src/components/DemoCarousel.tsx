@@ -1,6 +1,7 @@
 'use client';
 
 import useEmblaCarousel from 'embla-carousel-react';
+import Image from 'next/image';
 import { useCallback, useEffect, useState } from 'react';
 
 const demos = [
@@ -35,7 +36,13 @@ export default function DemoCarousel() {
           {demos.map((demo, idx) => (
             <div key={idx} className="flex-[0_0_100%] px-4">
               <div className="aspect-[9/16] rounded-2xl overflow-hidden relative bg-white/5 border border-white/10">
-                <img src={demo.before} alt={`${demo.label} - before`} className="absolute inset-0 w-full h-full object-cover" />
+                <Image
+                  src={demo.before}
+                  alt={`${demo.label} - before`}
+                  fill
+                  sizes="100vw"
+                  className="absolute inset-0 h-full w-full object-cover"
+                />
                 <video src={demo.after} className="absolute inset-0 w-full h-full object-cover" autoPlay muted loop playsInline />
                 <div className="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black/80 to-transparent p-4">
                   <span className="text-sm font-medium">{demo.label}</span>
@@ -55,7 +62,7 @@ export default function DemoCarousel() {
           />
         ))}
       </div>
-      <p className="text-center text-gray-500 text-xs mt-3">Swipe to see more ✨</p>
+      <p className="text-center text-gray-500 text-xs mt-3">Swipe to see more</p>
     </div>
   );
 }

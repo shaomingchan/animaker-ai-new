@@ -14,18 +14,7 @@ export async function POST(req: NextRequest) {
   }
 
   const userId = session.user.id;
-
-  // Check credits
-  const user = await db.query.users.findFirst({
-    where: sql`${users.id} = ${userId}`,
-  });
-
-  if (!user || user.credits < 1) {
-    return NextResponse.json(
-      { error: 'No credits remaining. Please purchase credits first.' },
-      { status: 402 }
-    );
-  }
+  let creditDeducted = false;
 
   try {
     const body = await req.json();
@@ -41,6 +30,19 @@ export async function POST(req: NextRequest) {
     if (duration < 1 || duration > 30) {
       return NextResponse.json({ error: 'Duration must be between 1 and 30 seconds' }, { status: 400 });
     }
+
+    const creditDeductResult = await db.update(users)
+      .set({ credits: sql`${users.credits} - 1` })
+      .where(sql`${users.id} = ${userId} AND ${users.credits} > 0`)
+      .returning({ id: users.id });
+
+    if (!creditDeductResult || creditDeductResult.length === 0) {
+      return NextResponse.json(
+        { error: 'No credits remaining. Please purchase credits first.' },
+        { status: 402 }
+      );
+    }
+    creditDeducted = true;
 
     const taskId = uuid();
 
@@ -81,17 +83,6 @@ export async function POST(req: NextRequest) {
       duration,  // Use dynamic duration from frontend
     });
 
-    // NOTE: neon-http driver does not support .transaction().
-    // Using sequential operations: deduct credits first, then insert task.
-    const creditDeductResult = await db.update(users)
-      .set({ credits: sql`${users.credits} - 1` })
-      .where(sql`${users.id} = ${userId}`)
-      .returning();
-
-    if (!creditDeductResult || creditDeductResult.length === 0) {
-      return NextResponse.json({ error: 'Failed to deduct credits' }, { status: 500 });
-    }
-
     await db.insert(tasks).values({
       id: taskId,
       userId: userId,
@@ -106,12 +97,18 @@ export async function POST(req: NextRequest) {
       fps: 30,
     });
 
+    creditDeducted = false;
     return NextResponse.json({
       taskId,
       rhTaskId: rhResult.taskId,
       status: rhResult.status,
     });
   } catch (error: unknown) {
+    if (creditDeducted) {
+      await db.update(users)
+        .set({ credits: sql`${users.credits} + 1` })
+        .where(sql`${users.id} = ${userId}`);
+    }
     console.error('Task creation failed:', error);
     return NextResponse.json(
       { error: error instanceof Error ? error.message : 'Internal server error' },

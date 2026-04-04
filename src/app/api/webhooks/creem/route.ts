@@ -1,7 +1,8 @@
 import { Webhook } from '@creem_io/nextjs';
 import { db } from '@/lib/db';
 import { users, orders } from '@/lib/db/schema';
-import { and, eq, sql } from 'drizzle-orm';
+import { eq, sql } from 'drizzle-orm';
+import { v5 as uuidv5 } from 'uuid';
 
 const CREEM_SINGLE_PRODUCT_ID =
   process.env.NEXT_PUBLIC_CREEM_PRODUCT_ID_SINGLE ||
@@ -12,6 +13,8 @@ const CREEM_10PACK_PRODUCT_ID =
   process.env.NEXT_PUBLIC_CREEM_PRODUCT_ID_10PACK ||
   process.env.CREEM_PRODUCT_ID_10PACK ||
   'prod_2g1c2h6Qn4x8b2XHQX3E4F';
+
+const CREEM_ORDER_NAMESPACE = '7d35ac43-c624-4d90-9efe-0ac4081f4ff6';
 
 function getCreditsForProduct(productId?: string) {
   if (productId === CREEM_10PACK_PRODUCT_ID) return 10;
@@ -49,29 +52,10 @@ export const POST = Webhook({
     const providerOrderId = data.order?.id || data.id;
     const credits = getCreditsForProduct(productId);
 
-    // NOTE: neon-http driver does not support .transaction().
-    // Idempotency check first.
-    const [existingOrder] = await db.select({ id: orders.id })
-      .from(orders)
-      .where(
-        and(
-          eq(orders.provider, 'creem'),
-          eq(orders.providerOrderId, providerOrderId),
-        )
-      )
-      .limit(1);
+    const orderId = uuidv5(`creem:${providerOrderId}`, CREEM_ORDER_NAMESPACE);
 
-    if (existingOrder) {
-      console.log(`[Creem Webhook] duplicate checkout.completed ignored: order=${providerOrderId}`);
-      return;
-    }
-
-    // Sequential operations: add credits first, then record order.
-    await db.update(users)
-      .set({ credits: sql`${users.credits} + ${credits}` })
-      .where(sql`${users.id} = ${userId}`);
-
-    await db.insert(orders).values({
+    const insertedOrder = await db.insert(orders).values({
+      id: orderId,
       userId,
       provider: 'creem',
       providerOrderId,
@@ -80,22 +64,33 @@ export const POST = Webhook({
       currency: (data.order?.currency?.toUpperCase() === 'CNY' ? 'CNY' : 'USD') as 'CNY' | 'USD',
       status: 'paid',
       paidAt: new Date(),
-    });
+    }).onConflictDoNothing({
+      target: orders.id,
+    }).returning({ id: orders.id });
 
-    console.log(`[Creem Webhook] checkout.completed: user=${userId}, email=${data.customer?.email}, +${credits} credits`);
+    if (insertedOrder.length === 0) {
+      console.log(`[Creem Webhook] duplicate checkout.completed ignored: order=${providerOrderId}`);
+      return;
+    }
+
+    await db.update(users)
+      .set({ credits: sql`${users.credits} + ${credits}` })
+      .where(sql`${users.id} = ${userId}`);
+
+    console.log(`[Creem Webhook] checkout.completed: user=${userId}, +${credits} credits`);
   },
 
   onSubscriptionActive: async (data) => {
     const userId = data.metadata?.referenceId as string | undefined;
     if (userId) {
-      console.log(`[Creem Webhook] subscription.active: user=${userId}, email=${data.customer?.email}`);
+      console.log(`[Creem Webhook] subscription.active: user=${userId}`);
     }
   },
 
   onSubscriptionCanceled: async (data) => {
     const userId = data.metadata?.referenceId as string | undefined;
     if (userId) {
-      console.log(`[Creem Webhook] subscription.canceled: user=${userId}, email=${data.customer?.email}`);
+      console.log(`[Creem Webhook] subscription.canceled: user=${userId}`);
     }
   },
 });

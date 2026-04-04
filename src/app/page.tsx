@@ -1,10 +1,20 @@
 ﻿"use client";
 
 import { Suspense } from "react";
+import Image from "next/image";
 import Link from "next/link";
 import DemoCarousel from "@/components/DemoCarousel";
 import LanguageSwitcher from "@/components/LanguageSwitcher";
 import { useTranslation } from "@/hooks/useTranslation";
+
+const CREEM_SINGLE_PRODUCT_ID =
+  process.env.NEXT_PUBLIC_CREEM_PRODUCT_ID_SINGLE ||
+  process.env.NEXT_PUBLIC_CREEM_PRODUCT_ID ||
+  "prod_28agLy2oWWjgUOe6hHnHKD";
+
+const CREEM_10PACK_PRODUCT_ID =
+  process.env.NEXT_PUBLIC_CREEM_PRODUCT_ID_10PACK ||
+  "prod_2g1c2h6Qn4x8b2XHQX3E4F";
 
 export default function Home() {
   const { t, messages } = useTranslation();
@@ -94,10 +104,12 @@ export default function Home() {
             ].map((demo) => (
               <div key={demo.label} className="group">
                 <div className="aspect-[9/16] rounded-2xl overflow-hidden relative bg-white/5 border border-white/10">
-                  <img
+                  <Image
                     src={demo.before}
                     alt={`${demo.label} - before`}
-                    className="absolute inset-0 w-full h-full object-cover transition-opacity duration-500 group-hover:opacity-0"
+                    fill
+                    sizes="(min-width: 768px) 33vw, 100vw"
+                    className="absolute inset-0 h-full w-full object-cover transition-opacity duration-500 group-hover:opacity-0"
                   />
                   <video
                     src={demo.after}
@@ -137,7 +149,7 @@ export default function Home() {
                 desc: t("pricing.single.desc"), 
                 features: ["Up to 30s video", "Download & share", "Commercial use"],
                 popular: false,
-                productId: "prod_4VHIjHB1NzDa4CJPb9zFJ1"
+                productId: CREEM_SINGLE_PRODUCT_ID
               },
               { 
                 name: t("pricing.pack.name"), 
@@ -146,7 +158,7 @@ export default function Home() {
                 desc: t("pricing.pack.desc"), 
                 features: ["Up to 30s video", "Download & share", "Commercial use", "Priority queue"],
                 popular: true,
-                productId: "prod_2g1c2h6Qn4x8b2XHQX3E4F"
+                productId: CREEM_10PACK_PRODUCT_ID
               },
             ].map((plan) => (
               <div key={plan.name} className={`relative p-8 rounded-2xl border ${plan.popular ? 'border-purple-500 bg-purple-500/10' : 'border-white/10 bg-white/5'}`}>

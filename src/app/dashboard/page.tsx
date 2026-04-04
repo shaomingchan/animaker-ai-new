@@ -24,25 +24,14 @@ interface UserInfo {
 export default function DashboardPage() {
   const [user, setUser] = useState<UserInfo | null>(null);
   const [loading, setLoading] = useState(true);
-  const [successMessage, setSuccessMessage] = useState<string | null>(null);
+  const [showPaymentSuccess, setShowPaymentSuccess] = useState(() => {
+    if (typeof window === "undefined") return false;
+    return new URLSearchParams(window.location.search).get("payment") === "success";
+  });
   const router = useRouter();
   const { t } = useTranslation();
 
   useEffect(() => {
-    // Check for payment success in URL
-    const urlParams = new URLSearchParams(typeof window !== 'undefined' ? window.location.search : '');
-    const paymentSuccess = urlParams.get('payment') === 'success';
-
-    if (paymentSuccess) {
-      setSuccessMessage(t("dashboard.paymentSuccess") || "Payment successful! Credits added.");
-      // Remove payment param from URL
-      if (typeof window !== 'undefined') {
-        const newUrl = new URL(window.location.href);
-        newUrl.searchParams.delete('payment');
-        window.history.replaceState({}, '', newUrl.toString());
-      }
-    }
-
     fetch("/api/user/me")
       .then((r) => {
         if (!r.ok) {
@@ -60,6 +49,14 @@ export default function DashboardPage() {
       })
       .finally(() => setLoading(false));
   }, [router]);
+
+  useEffect(() => {
+    if (!showPaymentSuccess || typeof window === "undefined") return;
+
+    const newUrl = new URL(window.location.href);
+    newUrl.searchParams.delete("payment");
+    window.history.replaceState({}, "", newUrl.toString());
+  }, [showPaymentSuccess]);
 
   const statusBadge: Record<string, { label: string; cls: string }> = {
     queued: { label: t("dashboard.status.queued"), cls: "bg-yellow-500/10 text-yellow-400" },
@@ -90,11 +87,13 @@ export default function DashboardPage() {
         ) : (
           <>
             {/* Success Message */}
-            {successMessage && (
+            {showPaymentSuccess && (
               <div className="bg-green-500/10 border border-green-500/20 rounded-xl p-4 mb-6 flex items-center justify-between">
-                <p className="text-green-400 font-medium">{successMessage}</p>
+                <p className="text-green-400 font-medium">
+                  {t("dashboard.paymentSuccess") || "Payment successful! Credits added."}
+                </p>
                 <button
-                  onClick={() => setSuccessMessage(null)}
+                  onClick={() => setShowPaymentSuccess(false)}
                   className="text-green-400 hover:text-green-300 transition"
                 >
                   ✕
