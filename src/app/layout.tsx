@@ -19,7 +19,10 @@ export const metadata: Metadata = {
     "AI animation",
     "animate photo",
   ],
-  icons: { icon: "/favicon.ico", apple: "/apple-touch-icon.png" },
+  icons: {
+    icon: "/favicon.ico",
+    apple: "/apple-touch-icon.png",
+  },
   openGraph: {
     title: "AI Dance Video Generator",
     description:
@@ -29,7 +32,7 @@ export const metadata: Metadata = {
     type: "website",
     images: [
       {
-        url: "https://pub-6870195e15d044f2944fc59f9ee569df.r2.dev/animaker/og-image.png",
+        url: "/og-image.png",
         width: 1200,
         height: 630,
         alt: "Animaker.AI - Make Any Photo Dance with AI",
@@ -41,9 +44,7 @@ export const metadata: Metadata = {
     title: "AI Dance Video Generator",
     description:
       "Upload a photo and your own dance video. Our AI transfers the exact movements to create stunning animated videos.",
-    images: [
-      "https://pub-6870195e15d044f2944fc59f9ee569df.r2.dev/animaker/og-image.png",
-    ],
+    images: ["/og-image.png"],
   },
   robots: { index: true, follow: true },
 };
