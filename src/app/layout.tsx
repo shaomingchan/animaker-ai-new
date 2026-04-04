@@ -20,7 +20,8 @@ export const metadata: Metadata = {
     "animate photo",
   ],
   icons: {
-    icon: "/favicon.ico",
+    icon: "/favicon.png",
+    shortcut: "/favicon.png",
     apple: "/apple-touch-icon.png",
   },
   openGraph: {
@@ -44,7 +45,7 @@ export const metadata: Metadata = {
     title: "AI Dance Video Generator",
     description:
       "Upload a photo and your own dance video. Our AI transfers the exact movements to create stunning animated videos.",
-    images: ["/og-image.png"],
+    images: ["/twitter-card.png"],
   },
   robots: { index: true, follow: true },
 };
