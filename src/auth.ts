@@ -4,6 +4,24 @@ import Resend from "next-auth/providers/resend"
 import { DrizzleAdapter } from "@auth/drizzle-adapter"
 import { db } from "@/lib/db"
 
+function serializeError(err: unknown): string {
+  if (!err) return String(err)
+  if (typeof err === "string") return err
+  if (err instanceof Error) {
+    const obj: Record<string, unknown> = {
+      name: err.name,
+      message: err.message,
+      stack: err.stack?.slice(0, 500),
+    }
+    if ("cause" in err && err.cause) {
+      obj.cause = serializeError(err.cause)
+    }
+    if ("type" in err) obj.type = (err as any).type
+    return JSON.stringify(obj)
+  }
+  try { return JSON.stringify(err) } catch { return String(err) }
+}
+
 export const { handlers, auth, signIn, signOut } = NextAuth({
   adapter: DrizzleAdapter(db),
   secret: process.env.AUTH_SECRET,
@@ -42,14 +60,14 @@ export const { handlers, auth, signIn, signOut } = NextAuth({
     },
   },
   logger: {
-    error(code, ...message) {
-      console.error("[auth][error]", typeof code === "object" ? JSON.stringify(code, Object.getOwnPropertyNames(code)) : code, ...message.map(m => typeof m === "object" ? JSON.stringify(m, Object.getOwnPropertyNames(m)) : m))
+    error(error, ...message) {
+      console.error("[auth][error]", serializeError(error), ...message.map(m => serializeError(m)))
     },
     warn(code, ...message) {
       console.warn("[auth][warn]", code, ...message)
     },
     debug(code, ...message) {
-      console.log("[auth][debug]", code, ...message)
+      console.log("[auth][debug]", code, ...message.map(m => typeof m === "object" ? JSON.stringify(m) : m))
     },
   },
   pages: {
