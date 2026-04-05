@@ -106,7 +106,7 @@ export default function TaskPage() {
       <nav className="fixed top-0 w-full z-50 bg-black/80 backdrop-blur-sm border-b border-white/10">
         <div className="max-w-6xl mx-auto px-6 h-16 flex items-center justify-between">
           <Link href="/" className="text-xl font-bold bg-gradient-to-r from-purple-400 to-pink-400 bg-clip-text text-transparent">
-            Animaker.AI
+            animaker.dev
           </Link>
           <Link href="/dashboard" className="text-sm text-gray-400 hover:text-white transition">
             Dashboard

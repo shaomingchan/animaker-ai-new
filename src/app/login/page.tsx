@@ -25,7 +25,7 @@ export default function LoginPage() {
       <div className="w-full max-w-md">
         <Link href="/" className="block text-center mb-10">
           <span className="text-2xl font-bold bg-gradient-to-r from-purple-400 to-pink-400 bg-clip-text text-transparent">
-            Animaker.AI
+            animaker.dev
           </span>
         </Link>
 

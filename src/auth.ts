@@ -1,4 +1,3 @@
-import { inspect } from "node:util"
 import NextAuth from "next-auth"
 import Google from "next-auth/providers/google"
 import Resend from "next-auth/providers/resend"
@@ -7,18 +6,20 @@ import { db } from "@/lib/db"
 
 export const { handlers, auth, signIn, signOut } = NextAuth({
   adapter: DrizzleAdapter(db),
-  secret: process.env.AUTH_SECRET ?? process.env.NEXTAUTH_SECRET,
+  secret: process.env.AUTH_SECRET,
   providers: [
     Google({
       clientId: process.env.GOOGLE_CLIENT_ID,
       clientSecret: process.env.GOOGLE_CLIENT_SECRET,
+      // 不使用 PKCE，改用 state 验证，避免 cookie 丢失问题
+      checks: ["state"],
       authorization: {
         params: {
           prompt: "consent",
           access_type: "offline",
-          response_type: "code"
-        }
-      }
+          response_type: "code",
+        },
+      },
     }),
     Resend({
       apiKey: process.env.RESEND_API_KEY,
@@ -27,84 +28,32 @@ export const { handlers, auth, signIn, signOut } = NextAuth({
   ],
   callbacks: {
     async signIn({ user, account, profile }) {
-      console.log(
-        "[auth][callback][signIn]",
-        inspect(
-          {
-            user: user
-              ? {
-                  id: user.id,
-                  email: user.email,
-                  name: user.name,
-                }
-              : null,
-            account: account
-              ? {
-                  provider: account.provider,
-                  type: account.type,
-                  providerAccountId: account.providerAccountId,
-                }
-              : null,
-            profile: profile
-              ? {
-                  sub: "sub" in profile ? profile.sub : undefined,
-                  email: "email" in profile ? profile.email : undefined,
-                  email_verified: "email_verified" in profile ? profile.email_verified : undefined,
-                  name: "name" in profile ? profile.name : undefined,
-                }
-              : null,
-          },
-          { depth: null, breakLength: 120, showHidden: true, getters: true }
-        )
-      )
+      console.log("[auth][signIn]", {
+        userId: user?.id,
+        email: user?.email,
+        provider: account?.provider,
+      })
       return true
     },
     session({ session, user }) {
       if (session.user) {
-        session.user.id = user.id;
+        session.user.id = user.id
       }
-      return session;
+      return session
     },
   },
   logger: {
     error(code, ...message) {
-      console.error(
-        "[auth][logger][error]",
-        code,
-        ...message.map((entry) =>
-          typeof entry === "string"
-            ? entry
-            : inspect(entry, { depth: null, breakLength: 120, showHidden: true, getters: true })
-        )
-      )
+      console.error("[auth][error]", code, ...message)
     },
     warn(code, ...message) {
-      console.warn(
-        "[auth][logger][warn]",
-        code,
-        ...message.map((entry) =>
-          typeof entry === "string"
-            ? entry
-            : inspect(entry, { depth: null, breakLength: 120, showHidden: true, getters: true })
-        )
-      )
+      console.warn("[auth][warn]", code, ...message)
     },
   },
   pages: {
     signIn: "/login",
+    error: "/login",
   },
   trustHost: true,
-  cookies: {
-    sessionToken: {
-      name: `authjs.session-token`,
-      options: {
-        httpOnly: true,
-        sameSite: "lax",
-        path: "/",
-        secure: process.env.NODE_ENV === "production",
-      },
-    },
-  },
-  useSecureCookies: process.env.NODE_ENV === "production",
-  debug: process.env.NODE_ENV === "development",
+  debug: process.env.NODE_ENV !== "production",
 })

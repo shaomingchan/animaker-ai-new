@@ -26,7 +26,7 @@ export default function Home() {
       <nav className="fixed top-0 w-full z-50 bg-black/80 backdrop-blur-sm border-b border-white/10">
         <div className="max-w-6xl mx-auto px-6 h-16 flex items-center justify-between">
           <span className="text-xl font-bold bg-gradient-to-r from-purple-400 to-pink-400 bg-clip-text text-transparent">
-            Animaker.AI
+            animaker.dev
           </span>
           <div className="flex items-center gap-6">
             <a href="#pricing" className="text-sm text-gray-400 hover:text-white transition">{t("nav.pricing")}</a>

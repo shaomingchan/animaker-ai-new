@@ -1,8 +1,10 @@
 import { NextResponse } from 'next/server'
 import type { NextRequest } from 'next/server'
 
-export function proxy(req: NextRequest) {
+export function middleware(req: NextRequest) {
   const host = req.headers.get('host')
+
+  // www → non-www redirect
   if (host?.startsWith('www.')) {
     const url = req.nextUrl.clone()
     url.host = host.replace('www.', '')
@@ -18,12 +20,21 @@ export function proxy(req: NextRequest) {
 
   const protectedPaths = ['/dashboard', '/create', '/task']
   if (protectedPaths.some(p => pathname.startsWith(p)) && !isLoggedIn) {
-    return Response.redirect(new URL('/login', req.nextUrl))
+    return NextResponse.redirect(new URL('/login', req.nextUrl))
   }
 
   return NextResponse.next()
 }
 
 export const config = {
-  matcher: ['/((?!_next/static|_next/image|favicon.ico).*)'],
+  matcher: [
+    /*
+     * Match all paths except:
+     * - _next/static (static files)
+     * - _next/image (image optimization)
+     * - favicon.ico
+     * - api/auth (Auth.js routes - CRITICAL: don't intercept auth callbacks)
+     */
+    '/((?!_next/static|_next/image|favicon.ico|api/auth).*)',
+  ],
 }

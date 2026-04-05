@@ -7,7 +7,7 @@ import "./globals.css";
 const inter = Inter({ subsets: ["latin"] });
 
 export const metadata: Metadata = {
-  title: "AI Dance Video Generator - Upload Your Own Dance Reference | Animaker.AI",
+  title: "AI Dance Video Generator - Upload Your Own Dance Reference | animaker.dev",
   description:
     "Upload a photo and your own dance video. Our AI transfers the exact movements to create stunning animated videos. No editing skills needed. Try it for $1.99.",
   keywords: [
@@ -29,14 +29,14 @@ export const metadata: Metadata = {
     description:
       "Upload a photo and your own dance video. Our AI transfers the exact movements to create stunning animated videos.",
     url: "https://animaker.dev",
-    siteName: "Animaker.AI",
+    siteName: "animaker.dev",
     type: "website",
     images: [
       {
         url: "/og-image.png",
         width: 1200,
         height: 630,
-        alt: "Animaker.AI - Make Any Photo Dance with AI",
+        alt: "animaker.dev - Make Any Photo Dance with AI",
       },
     ],
   },
