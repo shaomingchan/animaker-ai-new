@@ -11,7 +11,6 @@ export const { handlers, auth, signIn, signOut } = NextAuth({
     Google({
       clientId: process.env.GOOGLE_CLIENT_ID,
       clientSecret: process.env.GOOGLE_CLIENT_SECRET,
-      // 不使用 PKCE，改用 state 验证，避免 cookie 丢失问题
       checks: ["state"],
       authorization: {
         params: {
@@ -28,11 +27,11 @@ export const { handlers, auth, signIn, signOut } = NextAuth({
   ],
   callbacks: {
     async signIn({ user, account, profile }) {
-      console.log("[auth][signIn]", {
+      console.log("[auth][signIn]", JSON.stringify({
         userId: user?.id,
         email: user?.email,
         provider: account?.provider,
-      })
+      }))
       return true
     },
     session({ session, user }) {
@@ -44,10 +43,13 @@ export const { handlers, auth, signIn, signOut } = NextAuth({
   },
   logger: {
     error(code, ...message) {
-      console.error("[auth][error]", code, ...message)
+      console.error("[auth][error]", typeof code === "object" ? JSON.stringify(code, Object.getOwnPropertyNames(code)) : code, ...message.map(m => typeof m === "object" ? JSON.stringify(m, Object.getOwnPropertyNames(m)) : m))
     },
     warn(code, ...message) {
       console.warn("[auth][warn]", code, ...message)
+    },
+    debug(code, ...message) {
+      console.log("[auth][debug]", code, ...message)
     },
   },
   pages: {
@@ -55,5 +57,5 @@ export const { handlers, auth, signIn, signOut } = NextAuth({
     error: "/login",
   },
   trustHost: true,
-  debug: process.env.NODE_ENV !== "production",
+  debug: true,
 })
