@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { Inter } from "next/font/google";
 import { Analytics } from "@vercel/analytics/react";
 import HtmlLangSync from "@/components/HtmlLangSync";
+import { Providers } from "@/components/Providers";
 import "./globals.css";
 
 const inter = Inter({ subsets: ["latin"] });
@@ -61,9 +62,11 @@ export default function RootLayout({
   return (
     <html lang="en" suppressHydrationWarning>
       <body className={inter.className}>
-        <HtmlLangSync />
-        {children}
-        <Analytics />
+        <Providers>
+          <HtmlLangSync />
+          {children}
+          <Analytics />
+        </Providers>
       </body>
     </html>
   );

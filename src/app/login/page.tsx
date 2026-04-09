@@ -10,14 +10,19 @@ export default function LoginPage() {
   const { t } = useTranslation();
 
   const handleGoogleLogin = async () => {
-    setLoading(true);
-    const callbackUrl = typeof window !== "undefined"
-      ? (() => {
-          const params = new URLSearchParams(window.location.search);
-          return params.get("callbackUrl") || params.get("redirect") || "/dashboard";
-        })()
-      : "/dashboard";
-    await signIn("google", { callbackUrl });
+    try {
+      setLoading(true);
+      const callbackUrl = typeof window !== "undefined"
+        ? (() => {
+            const params = new URLSearchParams(window.location.search);
+            return params.get("callbackUrl") || params.get("redirect") || "/dashboard";
+          })()
+        : "/dashboard";
+      await signIn("google", { callbackUrl, redirect: true });
+    } catch (error) {
+      console.error("Login error:", error);
+      setLoading(false);
+    }
   };
 
   return (
